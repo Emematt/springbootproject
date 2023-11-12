@@ -1,4 +1,4 @@
 package com.accountingworkbook.springbootproject.controllers;
 
-public class TransactionController {
+public class AccountsController {
 }
