@@ -1,6 +1,7 @@
 package com.accountingworkbook.springbootproject.entities;
 
 
+import com.accountingworkbook.springbootproject.entities.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
