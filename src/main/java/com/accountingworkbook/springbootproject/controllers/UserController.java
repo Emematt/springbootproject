@@ -3,6 +3,7 @@ package com.accountingworkbook.springbootproject.controllers;
 
 import com.accountingworkbook.springbootproject.entities.user.User;
 import com.accountingworkbook.springbootproject.repositories.UserRepository;
+import com.accountingworkbook.springbootproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,89 +18,46 @@ import java.util.Optional;
 @RequestMapping("/userController")
 public class UserController {
 
+
     @Autowired
-    private UserRepository userRepo;
-
-
-    protected User user;
+    private UserService userService;
 
     @GetMapping("/users")
     public ResponseEntity<List<User>> getAllUsers(){
-        try {
-            List<User> userList = new ArrayList<>();
-            userRepo.findAll().forEach(userList::add);
-
-            if (userList.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-
-            return new ResponseEntity<>(HttpStatus.OK);
-            } catch (Exception ex){
-            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);}
+       List<User> users = this.userService.getAllUsers();
+       return  new ResponseEntity<>(users,HttpStatus.OK);
     }
 
 
-    @GetMapping("/getUserById/{id} ")
-        public ResponseEntity<User> getUserById(@PathVariable Integer userId)
-    {
-        Optional<User> userObj = userRepo.findById(userId);
-        if (userObj.isPresent()){
-            return  new ResponseEntity<>(userObj.get(),HttpStatus.OK);
-        } else {
-            return  new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/getUserById/{userId}")
+        public ResponseEntity<User> getUser(@PathVariable Integer userId){
+       User user = this.userService.getUserById(userId);
+       return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
 
     @PostMapping("/addUser")
-    public ResponseEntity<User> addUser(@RequestBody User user)
-    {
-        try{
-            User userObj = userRepo.save(user);
-            return new ResponseEntity<>(userObj,HttpStatus.CREATED);
-        } catch (Exception e){
-            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<User> addUser(@RequestBody User user) {
+        user = this.userService.createUser(user);
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
     @PostMapping("/updateUser/{userId}")
     public ResponseEntity<User> updateUser(@PathVariable Integer userId, @RequestBody User user)  {
-        try{
-            Optional<User> userData = userRepo.findById(userId);
-            if (userData.isPresent()){
-                User updateUserData = userData.get();
-                updateUserData.setRole(user.getRole());
-                updateUserData.setName(user.getName());
-
-                User userObj = userRepo.save(updateUserData);
-                return new ResponseEntity<>(userObj,HttpStatus.CREATED);
-            }
-
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-
-        } catch (Exception e){
-            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+       user = this.userService.updateUser(user);
+       return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @DeleteMapping("/deleteUserById/{id}")
+    @DeleteMapping("/deleteUserById/{userId}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Integer userId){
-        try{
-            userRepo.deleteById(userId);
-            return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e){
-            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        this.userService.deleteUser(userId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/deleteAllUsers")
     public ResponseEntity<HttpStatus> deleteAllUsers(){
-        try {
-            userRepo.deleteAll();
-            return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e){
-            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        this.userService.deleteAllUsers();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
 
