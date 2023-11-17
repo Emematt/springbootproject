@@ -1,31 +1,25 @@
 package com.accountingworkbook.springbootproject.entities.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 
 
 /**
  *
  */
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 @ToString
+@Component
 public class User{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonProperty("UserID")
-    private Integer userId;
+    private String userId;
 
     @JsonProperty("Name")
     private String name;
@@ -50,20 +44,35 @@ public class User{
     }
 
 
-    public void setId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Integer getId() {
-        return userId;
-    }
 
     public User getUser(String name) {
         this.name = name;
         return this;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(userId, user.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId);
+    }
+
     public void addUser(String name, Role role) {
         this.name = name;
         this.role = role;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

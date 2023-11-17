@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,24 +15,22 @@ public class Transaction{
 
 
 
-    @Column
+
     private Long id;
 
-    @Column
+
     @Enumerated(EnumType.ORDINAL)
     private Type type;
 
-    @Column
+
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @Column
     private  String description;
 
-    @ManyToOne
     private Account account;
-    @Id
-    private Long journalno;
+
+    private Long journalNo;
 
 
     public void setId(Long id) {
@@ -44,11 +41,11 @@ public class Transaction{
         return id;
     }
 
-    public void setJournalno(Long journalno) {
-        this.journalno = journalno;
+    public void setJournalno(Long journalNo) {
+        this.journalNo = journalNo;
     }
 
     public Long getJournalno() {
-        return journalno;
+        return journalNo;
     }
 }

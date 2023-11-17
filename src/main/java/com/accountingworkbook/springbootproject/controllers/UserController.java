@@ -2,7 +2,6 @@ package com.accountingworkbook.springbootproject.controllers;
 
 
 import com.accountingworkbook.springbootproject.entities.user.User;
-import com.accountingworkbook.springbootproject.repositories.UserRepository;
 import com.accountingworkbook.springbootproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,7 +29,7 @@ public class UserController {
 
 
     @GetMapping("/getUserById/{userId}")
-        public ResponseEntity<User> getUser(@PathVariable Integer userId){
+        public ResponseEntity<User> getUser(@PathVariable String userId){
        User user = this.userService.getUserById(userId);
        return new ResponseEntity<>(user,HttpStatus.OK);
     }
@@ -42,15 +41,15 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-    @PostMapping("/updateUser/{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable Integer userId, @RequestBody User user)  {
-       user = this.userService.updateUser(user);
-       return new ResponseEntity<>(user,HttpStatus.OK);
-    }
+//    @PostMapping("/updateUser/{userId}")
+//    public ResponseEntity<User> updateUser(@PathVariable Integer userId, @RequestBody User user)  {
+//       user = this.userService.updateUser(user);
+//       return new ResponseEntity<>(user,HttpStatus.OK);
+//    }
 
     @DeleteMapping("/deleteUserById/{userId}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable Integer userId){
-        this.userService.deleteUser(userId);
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable String userId){
+        this.userService.deleteUserById(userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

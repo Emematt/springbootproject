@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -19,8 +18,6 @@ public class Account{
     @Column
     private BigDecimal totalAmount;
 
-    @OneToOne
-    @MapsId
     private User user;
 
     @Id
