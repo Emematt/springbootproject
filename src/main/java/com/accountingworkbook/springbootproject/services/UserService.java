@@ -2,38 +2,28 @@ package com.accountingworkbook.springbootproject.services;
 
 
 import com.accountingworkbook.springbootproject.entities.user.User;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.*;
 
 @Component
 public class UserService {
 
-    private static final String FILE = "users.json";
 
     private static final String FILE_PATH= "src/main/resources/users.json";
 
-    File path = new File("C:\\workspace\\projects\\springbootproject\\users.json");
 
 
 //   1. readAll 2.<operation>   3.writeAll
 // Hw: Get, GetbyID & Delete
     //HW: Google Markdown examples. Write about protocols.
-
-//    @Autowired
-//    UserRepository userRepository;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -54,7 +44,8 @@ public class UserService {
         List <User> listOfUsers = new ArrayList<>();
         try {
             File file = ResourceUtils.getFile(FILE_PATH);
-            listOfUsers = objectMapper.readValue(file, new TypeReference<List<User>>(){});
+            listOfUsers = objectMapper.readValue(file, new TypeReference<>() {
+            });
         } catch  (IOException e) {e.printStackTrace();}
 
         return listOfUsers;

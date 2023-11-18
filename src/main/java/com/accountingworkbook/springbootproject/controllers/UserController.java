@@ -41,11 +41,11 @@ public class UserController {
         return new ResponseEntity<>(user,HttpStatus.OK);
     }
 
-//    @PostMapping("/updateUser/{userId}")
-//    public ResponseEntity<User> updateUser(@PathVariable Integer userId, @RequestBody User user)  {
-//       user = this.userService.updateUser(user);
-//       return new ResponseEntity<>(user,HttpStatus.OK);
-//    }
+    @PostMapping("/updateUser/{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable Integer userId, @RequestBody User user)  {
+       user = this.userService.updateUser(user);
+       return new ResponseEntity<>(user,HttpStatus.OK);
+    }
 
     @DeleteMapping("/deleteUserById/{userId}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable String userId){
